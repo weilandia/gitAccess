@@ -1,10 +1,6 @@
-class APIReposController < ApplicationController
-  def index
-    @repos = APIRepo.all
-  end
-
+class ApiReposController < ApplicationController
   def show
-    @repo = APIRepo.find(params[:name])
+    @repo = APIRepo.find(current_user, repo_params[:name])
   end
 
 private

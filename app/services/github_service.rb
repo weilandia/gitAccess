@@ -1,11 +1,10 @@
 class GithubService
   include GithubRepos
   include GithubViews
-  attr_reader :connection
   def initialize(user)
     @user = user
-    @connection = Faraday.new("https://api.github.com")
-    @connection.headers = {"Authorization" => "token #{@user.token}"}
+    @_connection = Faraday.new("https://api.github.com")
+    connection.headers = {"Authorization" => "token #{@user.token}"}
   end
 
   def get(path)
@@ -15,5 +14,9 @@ class GithubService
 private
   def parse(response)
     JSON.parse(response.body, symbolize_names: true)
+  end
+
+  def connection
+    @_connection
   end
 end
