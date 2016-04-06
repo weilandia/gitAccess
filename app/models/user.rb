@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
-    require "pry"; binding.pry
     where(uid: auth[:uid], provider: auth[:provider]).first_or_create do |user|
       user.email = auth.info.email
       user.provider = auth.provider
